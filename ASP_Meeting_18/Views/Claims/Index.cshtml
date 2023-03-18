@@ -1,0 +1,32 @@
+﻿@using System.Security.Claims;
+@model IEnumerable<Claim>
+<h2 class="badge bg-primary p-1 m-1 text-white">User Claims</h2>
+<a asp-action="Create" class="btn btn-secondary">Create new Claim</a>
+<table class="table table-sm table-striped">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Value</th>
+            <th>ValueType</th>
+            <th>Issuer</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(Claim claim in Model)
+        {
+            <tr>
+                <td>@claim.Type</td>
+                <td>@claim.Value</td>
+                <td>@claim.ValueType</td>
+                <td>@claim.Issuer</td>
+                <td>
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" name="claimsInfo" value="@claim.Type;@claim.Value;@claim.ValueType">
+                        <input type="submit" value="Delete" class="btn btn-sm btn-warning">
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

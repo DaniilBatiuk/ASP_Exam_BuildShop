@@ -1,0 +1,50 @@
+﻿@model ASP_Meeting_18.Models.ViewModels.AdminViewModel.DetailsProductViewModel
+@section Styles{
+    <style>
+        .task1 {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+        }
+
+
+        .text {
+            margin: 20px;
+            font-size: 20px;
+        }
+
+        .name {
+            font-size: 45px;
+            text-align: center;
+        }
+
+
+        img {
+            margin: 0px auto;
+        }
+    </style>
+}
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div class="wrapper">
+    <div class="__container">
+        <div class="task1">
+            <p class="name">@Html.DisplayFor(model => model.Product.Title)</p>
+            <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Product.Images!.First().Image!))" alt="Model.Name" width="1000" height="600">
+            <div class="text">
+                <p>@Html.DisplayNameFor(model => model.Product.Category!.Title) : <span>@Html.DisplayFor(model => model.Product.Category!.Title)</span></p>
+                <p>@Html.DisplayNameFor(model => model.Product.Count) : <span>@Html.DisplayFor(model => model.Product.Count)</span></p>
+                <p>@Html.DisplayNameFor(model => model.Product.Price) : <span>@Html.DisplayFor(model => model.Product.Price)</span></p>
+            </div>
+            <form asp-action="AddToCart" asp-controller="Cart" method="post">
+                <input type="hidden" value="@(Context.Request.Path.Value+Context.Request.QueryString.Value)" name="returnUrl" />
+                <input type="hidden" name="id" value="@Model.Product.Id" />
+                <input type="submit" value="Add to Cart" class="btn btn-sm btn-success float-end" />
+            </form>
+        </div>
+    </div>
+</div>

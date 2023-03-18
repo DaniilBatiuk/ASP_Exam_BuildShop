@@ -1,0 +1,87 @@
+﻿@model ASP_Meeting_18.Models.ViewModels.AccountViewModels.CreateProductViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@section Styles{
+    <style>
+
+    </style>
+}
+
+<h1>Create</h1>
+
+<h4>QuestRoom</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateProduct" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Product.Title" class="control-label"></label>
+                <input asp-for="Product.Title" class="form-control" />
+                <span asp-validation-for="Product.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Price" class="control-label"></label>
+                <input asp-for="Product.Price" class="form-control" />
+                <span asp-validation-for="Product.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Count" class="control-label"></label>
+                <input asp-for="Product.Count" class="form-control" />
+                <span asp-validation-for="Product.Count" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParentCategoryId" class="control-label"></label>
+                <select asp-for="ParentCategoryId" class="form-control" asp-items="@Model.ParentCategorySL"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Category" class="control-label"></label>
+                <select asp-for="Product.CategoryId" id="child-categories" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input type="file" id="Image" name="Image" class="form-control" accept="image/*" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function() {
+            $('#ParentCategoryId').change(function() {
+                var parentId = $(this).val();
+                $.ajax({
+                    type: 'GET',
+                    url: '/Admin/GetChildCategories',
+                    data: { parentId: parentId },
+                    success: function(response) {
+                        var childCategories = $('#child-categories');
+                        childCategories.empty();
+                        $.each(response, function(index, category) {
+                            childCategories.append($('<option/>', {
+                                value: category.id,
+                                text: category.title
+                            }));
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}
+

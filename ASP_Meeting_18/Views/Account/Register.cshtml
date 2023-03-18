@@ -1,0 +1,40 @@
+﻿
+@model RegisterViewModel
+<div class="wrapper">
+    <div class="__container">
+        <div class="form">
+            <form asp-action="Register" method="post">
+                <div asp-validation-summary="ModelOnly"></div>
+                <div class="mb-3">
+                    <label asp-for="Login" class="form-label"></label>
+                    <input asp-for="Login" class="form-control" />
+                    <span asp-validation-for="Login" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="YearOfBirth" class="form-label"></label>
+                    <input asp-for="YearOfBirth" class="form-control" />
+                    <span asp-validation-for="YearOfBirth" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ConfirmPassword" class="form-label"></label>
+                    <input asp-for="ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <input type="submit" value="Register" class="btn btn-primary" />
+                <a asp-action="Login"
+                   asp-route-returnUrl="@(Context.Request.Path.Value + Context.Request.QueryString)"
+                   class="btn btn-primary">Login</a>
+            </form>
+        </div>
+    </div>
+</div>

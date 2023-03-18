@@ -1,0 +1,33 @@
+﻿@using ASP_Meeting_18.Data;
+@model Tuple<List<Category>, string?, List<string>>
+@*@foreach (string category in Model.Item1)
+{
+    <div class="d-flex">
+        <a asp-action="Index" asp-controller="Home"
+       asp-route-category="@category"
+       class='@(category==Model.Item2 ? "btn btn-outline-primary" : "btn btn-outline-secondary")'>@category</a>
+    </div>
+}*@
+
+<div class="accordion" id="accordionPanelsStayOpenExample">
+    @foreach (Category category in Model.Item1)
+    {
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-heading-@category.Title">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-@category.Title" aria-expanded="false" aria-controls="panelsStayOpen-collapse-@category.Title" style="font-size:20px;">
+                    @category.Title
+                </button>
+            </h2>
+            @foreach (string innerCatedory in category.ChildCategoies!.Select(p => p.Title))
+            {
+                <div id="panelsStayOpen-collapse-@category.Title" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading-@category.Title">
+                    <div class="accordion-body">
+                        <a asp-action="Index" asp-controller="Home" asp-route-category="@innerCatedory" class="categoryLink">@innerCatedory</a>
+                    </div>
+                </div>
+
+            }
+        </div>
+    }
+</div>
