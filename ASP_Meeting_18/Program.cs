@@ -6,6 +6,7 @@ using static System.Collections.Specialized.BitVector32;
 using System.Configuration;
 using ASP_Meeting_18.Infrastructure.ModelBinderProviders;
 using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAutoMapper(typeof(CategoryProfile), typeof(ShopProfile), typeof(UserProfile), typeof(EditUserProfile));
@@ -61,29 +62,54 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
+
 app.MapControllerRoute(
-    name: "CategoryPaging",
-    pattern: "{category:alpha}/{page}",
-    defaults: new { controller = "Home", action = "Index" },
-    constraints: new { page = @"\d+" }
-    );
+    name: "root",
+ pattern: "/",
+ defaults: new { controller = "Home", action = "Index", page = 1, category = (string)null }
+ );
+app.MapControllerRoute(
+     name: "Default",
+     pattern: "Admin/Page{page}",
+     defaults: new { controller = "Admin", action = "Index", category = (string)null },
+     constraints: new { page = @"\d+" });
+app.MapControllerRoute(
+     name: "Default",
+     pattern: "Page{page}",
+     defaults: new { controller = "Home", action = "Index", category = (string)null },
+     constraints: new { page = @"\d+" });
+
+app.MapControllerRoute(
+    name: "cart",
+    pattern: "cart/{action=Index}",
+    defaults: new { controller = "Cart" }
+ );
 
 app.MapControllerRoute(
         name: "Category",
-        pattern: "{category:alpha}",
+        pattern: "{controller=Admin}/{category:alpha}",
+        defaults: new { controller = "Admin", action = "Index", page = 1 },
+        constraints: new
+        {
+            controller = @"^(?!Home$|Cart$|Account$|Claims$|Roles$|User$).*"
+        }
+);
+app.MapControllerRoute(
+        name: "Category",
+        pattern: "{controller=Home}/{category:alpha}",
         defaults: new { controller = "Home", action = "Index", page = 1 },
         constraints: new
         {
-            category = @"^(?!Admin$|Cart$|Account$|Claims$|Roles$|User$).*"
+            controller = @"^(?!Admin$|Cart$|Account$|Claims$|Roles$|User$).*"
         }
 );
 
 app.MapControllerRoute(
-    name: "Default",
-    pattern: "{page}",
-    defaults: new { controller = "Home", action = "Index" },
-    constraints: new { page = @"\d+" }
-);
+    name: "CategoryPaging",
+ pattern: "{category:alpha}/Page{page}",
+ defaults: new { controller = "Home", action = "Index" },
+ constraints: new { page = @"\d+" });
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

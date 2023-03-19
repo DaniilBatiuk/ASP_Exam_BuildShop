@@ -1,5 +1,5 @@
 ﻿@using ASP_Meeting_18.Data;
-@model Tuple<List<Category>, string?, List<string>>
+@model Tuple<List<Category>, string?, List<string>,string>
 @*@foreach (string category in Model.Item1)
 {
     <div class="d-flex">
@@ -23,7 +23,7 @@
             {
                 <div id="panelsStayOpen-collapse-@category.Title" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading-@category.Title">
                     <div class="accordion-body">
-                        <a asp-action="Index" asp-controller="Home" asp-route-category="@innerCatedory" class="categoryLink">@innerCatedory</a>
+                        <a asp-action="Index" asp-controller="@Model.Item4" asp-route-category="@innerCatedory" class="categoryLink">@innerCatedory</a>
                     </div>
                 </div>
 

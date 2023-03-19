@@ -1,0 +1,15 @@
+﻿@using ASP_Meeting_18.Data;
+@using ASP_Meeting_18.Models.DTO;
+@model ProductDTO
+
+<div class="card m-2" style="width: 18rem;">
+    <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Images!.First().Image!))" alt="@Model.Title" class="card-img-top">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Title</h5>
+        <p class="card-text">@Model.Price.ToString("# EUR")</p>
+        <p class="card-text"><small class="text-muted">@Model!.Category!.Title</small></p>
+        <a asp-controller="Admin" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-success">Details</a>
+        <a asp-controller="Admin" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success">Edit</a>
+        <a asp-controller="Admin" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-success">Delete</a>
+    </div>
+</div>

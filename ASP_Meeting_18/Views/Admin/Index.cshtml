@@ -1,81 +1,39 @@
 ﻿@using ASP_Meeting_18.Models.DTO;
 @model ASP_Meeting_18.Models.ViewModels.AccountViewModels.IndexShopViewModel
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@section Styles{
-    <style>
-        .task1 {
-            display: flex;
-            flex-wrap: wrap;
-        }
 
-        .item {
-            margin: 10px;
-            background-color:gray;
-            color: white;
-        }
 
-        .text {
-            margin: 20px;
-            font-size: 15px;
-        }
-
-        .name {
-            font-size: 25px;
-        }
-
-        .title {
-            font-size: 45px;
-            text-align: center;
-        }
-    </style>
-}
-
-<div class="wrapper">
-    <div class="__container">
-        <div class="row">
-            <div class="col col-md-3 col-12 mt-2">
-                <label asp-for="ParentCategoryId" class="control-label"></label>
-                <select asp-for="ParentCategoryId"
-                        class="form-select bg-light text-dark"
-                        asp-items="@Model.ParentCategorySL">
-                    <option value="0">All</option>
-                </select>
-            </div>
-            <div class="col col-md-3 col-12 mt-2">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId"
-                        class="form-select bg-light text-dark"
-                        asp-items="@Model.CategorySL">
-                    <option value="0">All</option>
-                </select>
-            </div>
-            <div class="col col-md-3 col-12 mt-2">
-                <a class="btn btn-success" asp-action="CreateCategoty">CreateCategoty</a>
-            </div>
-            <div class="col col-md-3 col-12 mt-2">
-                <a class="btn btn-success" asp-action="CreateProduct">CreateProduct</a>
+<div class="row">
+    <div class="row">
+        <div class="col col-md-3 col-12 mt-2">
+            <a class="btn btn-success" asp-action="CreateCategoty">CreateCategoty</a>
+        </div>
+        <div class="col col-md-3 col-12 mt-2">
+            <a class="btn btn-success" asp-action="CreateProduct">CreateProduct</a>
+        </div>
+    </div>
+    <div class="col-3">
+        @*<vc:categories-menu current-category="Apple"></vc:categories-menu>*@
+        @await Component.InvokeAsync("CategoriesMenu",
+        new {currentCategory=Model.Category,controller = "Admin"})
+    </div>
+    <div class="col">
+        <div class="container-fluid">
+            <div class="row row-cols-2">
+                @foreach (ProductDTO product in Model.Products)
+                {
+                    await Html.RenderPartialAsync("_ProductCard", product);
+                }
             </div>
         </div>
-        <div class="task1">
-            @foreach (ProductDTO item in Model.Products)
-            {
-                <div class="item">
-                    <img src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Images!.First().Image!))" alt="@item.Title" width="400" height="330">
-                    <div class="text">
-                        <p class="name">@Html.DisplayFor(modelItem => item.Title)</p>
-                        <p>@Html.DisplayNameFor(modelItem => item.Price) : @Html.DisplayFor(modelItem => item.Price)</p>
-                        <p>@Html.DisplayNameFor(modelItem => item.Count) : @Html.DisplayFor(modelItem => item.Count)</p>
-@*                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                        <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-                    </div>
-                </div>
-            }
-
-        </div>
+        <nav aria-label="pagination example">
+            <ul class="pagination">
+                @for (int i = 1; i <= Model.PageCount; i++)
+                {
+                    <li class="@(i==Model.Page ? "page-item active" : "page-item" )">
+                        <a asp-controller="Admin" asp-action="Index" asp-route-page="@i" asp-route-category="@Model.Category" class="page-link">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
     </div>
 </div>

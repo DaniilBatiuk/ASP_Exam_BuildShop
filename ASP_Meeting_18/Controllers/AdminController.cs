@@ -2,6 +2,7 @@
 using ASP_Meeting_18.Models.DTO;
 using ASP_Meeting_18.Models.ViewModels.AccountViewModels;
 using ASP_Meeting_18.Models.ViewModels.AdminViewModel;
+using ASP_Meeting_18.Models.ViewModels.HomeViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,8 +12,8 @@ using System.Drawing.Drawing2D;
 
 namespace ASP_Meeting_18.Controllers
 {
-    [Authorize(Policy = "AdminPolicy")]
-    //[Authorize(Roles = "manager")]
+    //[Authorize(Policy = "AdminPolicy")]
+    ////[Authorize(Roles = "manager")]
     public class AdminController : Controller
     {
         private readonly ShopDbContext _context;
@@ -22,23 +23,29 @@ namespace ASP_Meeting_18.Controllers
             _context = context;
             this.mapper = mapper;
         }
-        public async Task<IActionResult> Index()
-        {
-            IQueryable<Product> product = _context.Products.Include(c => c.Category).Include(c => c.Images);
-            SelectList SL1 = new SelectList(await _context.Categories.Where(p => p.ParentCategoryId == null).Select(p => p.Title).Distinct().ToListAsync());
-            SelectList SL2 = new SelectList(await _context.Categories.Where(p => p.ParentCategoryId != null).Select(p => p.Title).Distinct().ToListAsync());
-            IEnumerable<ProductDTO> temp = mapper.Map<IEnumerable<ProductDTO>>(await product.ToListAsync());
 
-            IndexShopViewModel vM = new IndexShopViewModel
+
+        public async Task<IActionResult> Index(string? category, int page = 1)
+        {
+            IQueryable<Product> products = _context.Products
+                .Include(t => t.Category)
+                .Include(t => t.Images);
+            if (category != null)
+                products = products.Where(t => t.Category!.Title == category);
+
+            int itemsPerPage = 4;
+            int pageCount = (int)Math.Ceiling((decimal)products.Count() / itemsPerPage);
+            products = products.Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
+            IEnumerable<ProductDTO> temp = mapper.Map<IEnumerable<ProductDTO>>(await products.ToListAsync());
+            IndexShopViewModel vm = new IndexShopViewModel
             {
                 Products = temp,
-                ParentCategorySL = SL1,
-                CategorySL = SL2,  
+                Category = category,
+                Page = page,
+                PageCount = pageCount
             };
-            return View(vM);
+            return View(vm);
         }
-
-
         public async Task<IActionResult> CreateCategoty()
         {
             CreateCategoryViewModel vM = new CreateCategoryViewModel {
@@ -175,7 +182,7 @@ namespace ASP_Meeting_18.Controllers
                 }
                 Product product = mapper.Map<Product>(vM.Product);
                 _context.Update(product);
-                if (vM.Product.Images is not null)
+                if (vM.Image is not null)
                 {
                     var product2 = await _context.Products
                     .Include(c => c.Category)
