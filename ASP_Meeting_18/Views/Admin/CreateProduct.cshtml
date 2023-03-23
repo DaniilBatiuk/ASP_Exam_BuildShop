@@ -12,7 +12,7 @@
 
 <h1>Create</h1>
 
-<h4>QuestRoom</h4>
+<h4>Build Shop</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -22,6 +22,11 @@
                 <label asp-for="Product.Title" class="control-label"></label>
                 <input asp-for="Product.Title" class="form-control" />
                 <span asp-validation-for="Product.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Description" class="control-label"></label>
+                <input asp-for="Product.Description" class="form-control" />
+                <span asp-validation-for="Product.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Product.Price" class="control-label"></label>
@@ -36,10 +41,12 @@
             <div class="form-group">
                 <label asp-for="ParentCategoryId" class="control-label"></label>
                 <select asp-for="ParentCategoryId" class="form-control" asp-items="@Model.ParentCategorySL"></select>
+                <span asp-validation-for="ParentCategoryId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Product.Category" class="control-label"></label>
                 <select asp-for="Product.CategoryId" id="child-categories" class="form-control"></select>
+                <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>

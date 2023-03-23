@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Drawing.Drawing2D;
+using System.Globalization;
 
 namespace ASP_Meeting_18.Controllers
 {
@@ -46,7 +47,7 @@ namespace ASP_Meeting_18.Controllers
             };
             return View(vm);
         }
-        public async Task<IActionResult> CreateCategoty()
+        public async Task<IActionResult> CreateCategory()
         {
             CreateCategoryViewModel vM = new CreateCategoryViewModel {
                 ParentCategorySL = new SelectList(await _context.Categories.Where(p => p.ParentCategoryId == null).Distinct().ToListAsync(), "Id", "Title")
@@ -56,7 +57,7 @@ namespace ASP_Meeting_18.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateCategoty(CreateCategoryViewModel vM)
+        public async Task<IActionResult> CreateCategory(CreateCategoryViewModel vM)
         {
             if (!ModelState.IsValid)
             {
@@ -113,27 +114,7 @@ namespace ASP_Meeting_18.Controllers
             return Json(childCategories);
         }
 
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Products == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Products
-                .Include(c => c.Category)
-                .Include(c => c.Images)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            DetailsProductViewModel vM = new DetailsProductViewModel
-            {
-                Product = mapper.Map<ProductDTO>(product)
-            };
-            return View(vM);
-        }
+        
 
         public async Task<IActionResult> Edit(int? id)
         {
@@ -213,7 +194,7 @@ namespace ASP_Meeting_18.Controllers
             {
                 return NotFound();
             }
-            var questRoom = await _context.Products.FindAsync(id);
+            var questRoom = await _context.Products.Include(c => c.Category).Include(c => c.Images).FirstOrDefaultAsync(m => m.Id == id);
             if (questRoom != null)
             {
                 _context.Products.Remove(questRoom);

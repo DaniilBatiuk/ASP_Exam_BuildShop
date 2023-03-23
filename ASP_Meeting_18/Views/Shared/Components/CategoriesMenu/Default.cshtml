@@ -8,26 +8,29 @@
        class='@(category==Model.Item2 ? "btn btn-outline-primary" : "btn btn-outline-secondary")'>@category</a>
     </div>
 }*@
-
 <div class="accordion" id="accordionPanelsStayOpenExample">
-    @foreach (Category category in Model.Item1)
-    {
 
+    @for (int i = 0; i < Model.Item1.Count; i++)
+    {
         <div class="accordion-item">
-            <h2 class="accordion-header" id="panelsStayOpen-heading-@category.Title">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-@category.Title" aria-expanded="false" aria-controls="panelsStayOpen-collapse-@category.Title" style="font-size:20px;">
-                    @category.Title
+            <h2 class="accordion-header" id="panelsStayOpen-heading-@i">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-@i" aria-expanded="false" aria-controls="panelsStayOpen-collapse-@i" style="font-size:20px;">
+                    @Model.Item1[i].Title
                 </button>
             </h2>
-            @foreach (string innerCatedory in category.ChildCategoies!.Select(p => p.Title))
+            @if (@Model.Item1[i].ChildCategoies?.Count != null)
             {
-                <div id="panelsStayOpen-collapse-@category.Title" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading-@category.Title">
-                    <div class="accordion-body">
-                        <a asp-action="Index" asp-controller="@Model.Item4" asp-route-category="@innerCatedory" class="categoryLink">@innerCatedory</a>
+                @foreach (string innerCatedory in @Model.Item1[i].ChildCategoies!.Select(p => p.Title))
+                {
+                    <div id="panelsStayOpen-collapse-@i" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading-@i">
+                        <div class="accordion-body">
+                            <a asp-action="Index" asp-controller="@Model.Item4" asp-route-category="@innerCatedory" class="categoryLink">@innerCatedory</a>
+                        </div>
                     </div>
-                </div>
 
+                }
             }
         </div>
+
     }
 </div>

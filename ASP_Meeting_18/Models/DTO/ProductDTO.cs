@@ -11,6 +11,10 @@ namespace ASP_Meeting_18.Models.DTO
         [Required]
         [Display(Name = "Title")]
         public string Title { get; set; } = default!;
+
+        [Required]
+        [Display(Name = "Description")]
+        public string Description { get; set; } = default!;
         [Required]
         [Display(Name = "Price")]
         public double Price { get; set; }

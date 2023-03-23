@@ -7,6 +7,8 @@ using System.Configuration;
 using ASP_Meeting_18.Infrastructure.ModelBinderProviders;
 using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAutoMapper(typeof(CategoryProfile), typeof(ShopProfile), typeof(UserProfile), typeof(EditUserProfile));
@@ -19,6 +21,17 @@ builder.Services.AddIdentity<User, IdentityRole>()
 string connStr = builder.Configuration.GetConnectionString("shopDb");
 builder.Services.AddDbContext<ShopDbContext>(options =>
 options.UseSqlServer(connStr));
+
+builder.Services.AddControllersWithViews()
+        .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+        .AddDataAnnotationsLocalization();
+
+    // Set the culture to use the period as the decimal separator
+    var cultureInfo = new CultureInfo("en-US");
+    cultureInfo.NumberFormat.NumberDecimalSeparator = ".";
+    CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+    CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
 builder.Services.AddAuthorization(option =>
 {
     option.AddPolicy("FrameworkPolicy", policy =>
@@ -91,7 +104,8 @@ app.MapControllerRoute(
         defaults: new { controller = "Admin", action = "Index", page = 1 },
         constraints: new
         {
-            controller = @"^(?!Home$|Cart$|Account$|Claims$|Roles$|User$).*"
+            controller = @"^(?!Home$|Cart$|Account$|Claims$|Roles$|User$).*",
+            category = "(?!CreateProduct|CreateCategory)"
         }
 );
 app.MapControllerRoute(

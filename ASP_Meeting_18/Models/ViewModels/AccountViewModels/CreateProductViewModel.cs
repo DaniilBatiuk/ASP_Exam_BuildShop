@@ -1,5 +1,7 @@
 ﻿using ASP_Meeting_18.Models.DTO;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
 namespace ASP_Meeting_18.Models.ViewModels.AccountViewModels
 {

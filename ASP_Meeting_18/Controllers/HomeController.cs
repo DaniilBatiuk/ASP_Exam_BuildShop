@@ -1,6 +1,9 @@
 ﻿using ASP_Meeting_18.Data;
 using ASP_Meeting_18.Models;
+using ASP_Meeting_18.Models.DTO;
+using ASP_Meeting_18.Models.ViewModels.AdminViewModel;
 using ASP_Meeting_18.Models.ViewModels.HomeViewModels;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -11,11 +14,13 @@ namespace ASP_Meeting_18.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ShopDbContext context;
+        private readonly IMapper mapper;
 
-        public HomeController(ILogger<HomeController> logger, ShopDbContext context)
+        public HomeController(ILogger<HomeController> logger, ShopDbContext context, IMapper mapper)
         {
             _logger = logger;
             this.context = context;
+            this.mapper = mapper;
         }
 
         public async Task<IActionResult> Index(string? category, int page = 1)
@@ -38,7 +43,28 @@ namespace ASP_Meeting_18.Controllers
             };
             return View(vm);
         }
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null || context.Products == null)
+            {
+                return NotFound();
+            }
 
+            var product = await context.Products
+                .Include(c => c.Category)
+                .Include(c => c.Category!.ParentCategory)
+                .Include(c => c.Images)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            DetailsProductViewModel vM = new DetailsProductViewModel
+            {
+                Product = mapper.Map<ProductDTO>(product)
+            };
+            return View(vM);
+        }
         public IActionResult Privacy()
         {
             return View();
