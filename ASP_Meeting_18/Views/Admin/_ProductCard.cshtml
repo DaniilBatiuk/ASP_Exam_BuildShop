@@ -10,9 +10,9 @@
         <p class="card-text"><small class="text-muted">@Model!.Category!.Title</small></p>
         
         <div class="btn-group" role="group" aria-label="Basic mixed styles example" style="display: flex; align-items:center; margin-bottom:10px;">
-            <a asp-controller="Home" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-success">Details</a>
-            <a asp-controller="Admin" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
-            <a asp-controller="Admin" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+            <a asp-controller="Product" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-success">Details</a>
+            <a asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+            <a asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
         </div>
     </div>
 </div>

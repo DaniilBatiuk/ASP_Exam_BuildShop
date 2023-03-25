@@ -104,7 +104,7 @@ app.MapControllerRoute(
         defaults: new { controller = "Admin", action = "Index", page = 1 },
         constraints: new
         {
-            controller = @"^(?!Home$|Cart$|Account$|Claims$|Roles$|User$).*",
+            controller = @"^(?!Home$|Cart$|Account$|Claims$|Roles$|User$|Product$).*",
             category = "(?!CreateProduct|CreateCategory)"
         }
 );
@@ -114,7 +114,7 @@ app.MapControllerRoute(
         defaults: new { controller = "Home", action = "Index", page = 1 },
         constraints: new
         {
-            controller = @"^(?!Admin$|Cart$|Account$|Claims$|Roles$|User$).*"
+            controller = @"^(?!Admin$|Cart$|Account$|Claims$|Roles$|User$|Product$).*"
         }
 );
 

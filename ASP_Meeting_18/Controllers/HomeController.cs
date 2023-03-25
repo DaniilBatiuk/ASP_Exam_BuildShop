@@ -43,37 +43,6 @@ namespace ASP_Meeting_18.Controllers
             };
             return View(vm);
         }
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || context.Products == null)
-            {
-                return NotFound();
-            }
-
-            var product = await context.Products
-                .Include(c => c.Category)
-                .Include(c => c.Category!.ParentCategory)
-                .Include(c => c.Images)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            DetailsProductViewModel vM = new DetailsProductViewModel
-            {
-                Product = mapper.Map<ProductDTO>(product)
-            };
-            return View(vM);
-        }
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        
     }
 }
