@@ -10,6 +10,14 @@
         <div class="col col-md-3 col-12 mt-2">
             <a class="btn btn-success" asp-controller="Product" asp-action="CreateProduct">CreateProduct</a>
         </div>
+        <form asp-action="Index" method="get">
+            <div class="col col-md-3 col-12 mt-2">
+                <input type="text" asp-for="Search" placeholder="Search in product name..." class="form-control" />
+            </div>
+            <div class="col col-md-3 col-12 mt-2">
+                <button type="submit" class="btn btn-outline-success">Seacrh</button>
+            </div>
+        </form>
     </div>
     <div class="col-3">
         @*<vc:categories-menu current-category="Apple"></vc:categories-menu>*@

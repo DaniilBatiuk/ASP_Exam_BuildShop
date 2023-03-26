@@ -33,7 +33,13 @@ body {
     color: blue;
     text-decoration:underline;
 }
-
+.select {
+    color: blue;
+    text-decoration: underline;
+}
+.select2 {
+    background-color: rgb(230, 208, 177);
+}
 .wrapper {
     overflow: hidden;
     display: flex;

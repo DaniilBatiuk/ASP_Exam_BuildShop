@@ -14,7 +14,7 @@
     {
         <div class="accordion-item">
             <h2 class="accordion-header" id="panelsStayOpen-heading-@i">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-@i" aria-expanded="false" aria-controls="panelsStayOpen-collapse-@i" style="font-size:20px;">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-@i" aria-expanded="false" aria-controls="panelsStayOpen-collapse-@i" style="font-size:20px;">
                     @Model.Item1[i].Title
                 </button>
             </h2>
@@ -22,9 +22,9 @@
             {
                 @foreach (string innerCatedory in @Model.Item1[i].ChildCategoies!.Select(p => p.Title))
                 {
-                    <div id="panelsStayOpen-collapse-@i" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading-@i">
-                        <div class="accordion-body">
-                            <a asp-action="Index" asp-controller="@Model.Item4" asp-route-category="@innerCatedory" class="categoryLink">@innerCatedory</a>
+                    <div id="panelsStayOpen-collapse-@i" class="accordion-collapse collapse @(Model.Item2 != null && @Model.Item1[i].ChildCategoies!.Select(p => p.Title).Contains(Model.Item2) ? "show" : "")" aria-labelledby="panelsStayOpen-heading-@i">
+                        <div class="accordion-body select2">
+                            <a asp-action="Index" asp-controller="@Model.Item4" asp-route-category="@innerCatedory" class="categoryLink @(Model.Item2 == innerCatedory ? "select" : "")">@innerCatedory</a>
                         </div>
                     </div>
 

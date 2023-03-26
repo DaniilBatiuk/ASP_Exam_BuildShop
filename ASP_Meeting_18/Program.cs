@@ -76,53 +76,53 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 
-app.MapControllerRoute(
-    name: "root",
- pattern: "/",
- defaults: new { controller = "Home", action = "Index", page = 1, category = (string)null }
- );
-app.MapControllerRoute(
-     name: "Default",
-     pattern: "Admin/Page{page}",
-     defaults: new { controller = "Admin", action = "Index", category = (string)null },
-     constraints: new { page = @"\d+" });
-app.MapControllerRoute(
-     name: "Default",
-     pattern: "Page{page}",
-     defaults: new { controller = "Home", action = "Index", category = (string)null },
-     constraints: new { page = @"\d+" });
+//app.MapControllerRoute(
+//    name: "root",
+// pattern: "/",
+// defaults: new { controller = "Home", action = "Index", page = 1 }
+// );
+//app.MapControllerRoute(
+//     name: "Default",
+//     pattern: "Admin/Page{page}",
+//     defaults: new { controller = "Admin", action = "Index", category = (string)null },
+//     constraints: new { page = @"\d+" });
+//app.MapControllerRoute(
+//     name: "Default",
+//     pattern: "Page{page}",
+//     defaults: new { controller = "Home", action = "Index", category = (string)null },
+//     constraints: new { page = @"\d+" });
 
-app.MapControllerRoute(
-    name: "cart",
-    pattern: "cart/{action=Index}",
-    defaults: new { controller = "Cart" }
- );
+//app.MapControllerRoute(
+//    name: "cart",
+//    pattern: "cart/{action=Index}",
+//    defaults: new { controller = "Cart" }
+// );
 
-app.MapControllerRoute(
-        name: "Category",
-        pattern: "{controller=Admin}/{category:alpha}",
-        defaults: new { controller = "Admin", action = "Index", page = 1 },
-        constraints: new
-        {
-            controller = @"^(?!Home$|Cart$|Account$|Claims$|Roles$|User$|Product$).*",
-            category = "(?!CreateProduct|CreateCategory)"
-        }
-);
-app.MapControllerRoute(
-        name: "Category",
-        pattern: "{controller=Home}/{category:alpha}",
-        defaults: new { controller = "Home", action = "Index", page = 1 },
-        constraints: new
-        {
-            controller = @"^(?!Admin$|Cart$|Account$|Claims$|Roles$|User$|Product$).*"
-        }
-);
+//app.MapControllerRoute(
+//        name: "Category",
+//        pattern: "{controller=Admin}/{category:alpha}",
+//        defaults: new { controller = "Admin", action = "Index", page = 1 },
+//        constraints: new
+//        {
+//            controller = @"^(?!Home$|Cart$|Account$|Claims$|Roles$|User$|Product$).*",
+//            category = "(?!CreateProduct|CreateCategory)"
+//        }
+//);
+//app.MapControllerRoute(
+//        name: "Category2",
+//        pattern: "{controller=Home}/{category:alpha}",
+//        defaults: new { controller = "Home", action = "Index", page = 1 },
+//        constraints: new
+//        {
+//            controller = @"^(?!Admin$|Cart$|Account$|Claims$|Roles$|User$|Product$).*"
+//        }
+//);
 
-app.MapControllerRoute(
-    name: "CategoryPaging",
- pattern: "{category:alpha}/Page{page}",
- defaults: new { controller = "Home", action = "Index" },
- constraints: new { page = @"\d+" });
+//app.MapControllerRoute(
+//    name: "CategoryPaging",
+// pattern: "{category:alpha}/Page{page}",
+// defaults: new { controller = "Home", action = "Index" },
+// constraints: new { page = @"\d+" });
 
 app.MapControllerRoute(
     name: "default",

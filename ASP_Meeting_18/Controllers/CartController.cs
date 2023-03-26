@@ -33,13 +33,13 @@ namespace ASP_Meeting_18.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public async Task<IActionResult> AddToCart(int id, string? returnUrl)
-        public async Task<IActionResult> AddToCart(Cart cart, int id, string? returnUrl)
+        public async Task<IActionResult> AddToCart(Cart cart, int id,int quantity, string? returnUrl)
         {
             //Cart cart = GetCart();
             Product? product = await context.Products.FindAsync(id);
             if (product != null)
             {
-                cart.AddToCart(product, 1);
+                cart.AddToCart(product, quantity);
                 HttpContext.Session.Set("cart", cart.CartItems);
             }
             return RedirectToAction("Index", new { returnUrl });

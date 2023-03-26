@@ -26,5 +26,7 @@ namespace ASP_Meeting_18.Models.ViewModels.AccountViewModels
         public int Page { get; set; }
 
         public int PageCount { get; set; }
+
+        public string? Search { get; set; }
     }
 }

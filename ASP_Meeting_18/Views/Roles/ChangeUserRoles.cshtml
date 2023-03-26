@@ -5,10 +5,15 @@
     <input type="hidden" value="@Model.UserId" />
     @foreach (var role in Model.AllRoles)
     {
-        <input type="checkbox" name="roles"  
+@*        <input type="checkbox" name="roles"  
                       @(Model.UserRoles.Contains(role.Name) ? "checked" : "") value="@role.Name" />
         <span class="ms-3">@role.Name</span>
-        <br />
+        <br />*@
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="@role.Name" name="roles" value="@role.Name" @(User.IsInRole(role.Name) ? "checked" : "")>
+            <label class="form-check-label" for="@role.Name">@role.Name</label>
+        </div>
     }
     <input type="submit" value="Save" class="btn btn-success" />
 </form>

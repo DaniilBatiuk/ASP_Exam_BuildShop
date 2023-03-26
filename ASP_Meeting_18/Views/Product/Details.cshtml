@@ -1,40 +1,119 @@
 ﻿@model ASP_Meeting_18.Models.ViewModels.AdminViewModel.DetailsProductViewModel
 @section Styles{
     <style>
-    .task1 {
-        display: flex;
-        flex-wrap: wrap;
-    }
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
 
-    .task1 img {
-        float: left;
-        margin-right: 20px;
-    }
+        .task1 {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+        }
 
-    .text {
-        margin-left:10px;
-        font-size: 20px;
-        float: right;
-        display: flex;
-        flex-direction: column;
-    }
+        .img {
+            max-width: 50%;
+            height: auto;
+            margin-right: 1rem;
+        }
 
-    .name {
-        font-size: 45px;
-        text-align: center;
-    }
 
-    .description{
-        margin-top:20px;
-        font-size: 20px;
-    }
+
+        .text {
+            font-size: 15px;
+            max-width: 20%;
+            margin: 0;
+            margin-top: 50px;
+            font-family: andale mono, monospace;
+        }
+
+        .margin_buttom {
+            margin-bottom: 20px;
+        }
+
+        .name {
+            font-size: 45px;
+            text-align: center;
+        }
+
+        .description {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+
+        .category {
+            margin-bottom: 6px;
+            color: grey;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .title {
+            font-size: 35px;
+        }
+
+        .quantity_counter {
+            width: 135px;
+            border: 1px solid black;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 27px;
+        }
+
+        .quantity_counter__button {
+            width: 40px;
+            height: 40px;
+            font-size: 25px;
+            border: none;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .quantity_counter__value {
+            text-align: center;
+        }
+
+        .money {
+            color: grey;
+            font-size: 15px;
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .quantity {
+            margin-bottom: 6px;
+            font-size: 15px;
+        }
+
+        .button_add {
+            width: 100%;
+            height: 45px;
+            border-radius: 10px;
+            border: none;
+            color: white;
+            font-size: 13px;
+            background-color: rgb(240, 154, 24);
+        }
+
+        .ua {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .delivery {
+            margin: 0px 5px 20px 5px;
+            text-align: center;
+        }
     </style>
 }
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+@*<h1>Details</h1>
 
 <div class="task1">
     <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Product.Images!.First().Image!))" alt="Model.Name" width="300" height="300">
@@ -51,4 +130,52 @@
         </form>
     </div>
     <p class="description">@Html.DisplayNameFor(model => model.Product.Description) : <span>@Html.DisplayFor(model => model.Product.Description)</span></p>
+</div>*@
+
+
+<div class="task1">
+    <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Product.Images!.First().Image!))" alt="Model.Name" class="img">
+    <div class="text">
+        <p class="category">@Html.DisplayFor(model => model.Product.Category!.Title)</p>
+        <div class="title margin_buttom">@Html.DisplayFor(model => model.Product.Title)</div>
+        <p class="money margin_buttom">$@Html.DisplayFor(model => model.Product.Price) USD</p>
+        <p class="quantity">Quantity</p>
+        <div class="quantity_counter margin_buttom">
+            <button class="quantity_counter__button" id="decrement">-</button>
+            <div class="quantity_counter__value" id="value">0</div>
+            <button class="quantity_counter__button" id="increment">+</button>
+        </div>
+        <form asp-action="AddToCart" asp-controller="Cart" method="post">
+            <input type="hidden" value="@(Context.Request.Path.Value+Context.Request.QueryString.Value)" name="returnUrl" />
+            <input type="hidden" name="id" value="@Model.Product.Id" />
+            <input type="hidden" name="quantity" id="quantity" value="0" />
+            <input type="submit" value="Add to Cart" class="button_add margin_buttom" />
+        </form>
+        <p class="delivery">Approximate delivery time in <img src="~/photos/ua.png" alt="Name" class="ua"> UA 3 - 5 days</p>
+
+        <p>@Html.DisplayFor(model => model.Product.Description) </p>
+    </div>
+
 </div>
+
+@section Scripts {
+    <script>
+        const decrementBtn = document.getElementById("decrement");
+        const incrementBtn = document.getElementById("increment");
+        const valueEl = document.getElementById("value");
+        var quantityElement = document.getElementById("quantity");
+        let value = 0;
+
+        decrementBtn.addEventListener("click", () => {
+            value = value > 0 ? value - 1 : 0;
+            valueEl.textContent = value;
+            quantityElement.value = value;
+        });
+
+        incrementBtn.addEventListener("click", () => {
+            value = value + 1;
+            valueEl.textContent = value;
+            quantityElement.value = value;
+        });
+    </script>
+}

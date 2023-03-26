@@ -1,4 +1,5 @@
 ﻿@using ASP_Meeting_18.Data;
+@using ASP_Meeting_18.Models.DTO;
 @using ASP_Meeting_18.Models.ViewModels.HomeViewModels
 @model HomeIndexViewModel
 @{
@@ -6,6 +7,14 @@
 }
 
 <div class="row">
+    <form asp-action="Index" method="get">
+        <div class="col col-md-3 col-12 mt-2">
+            <input type="text" asp-for="Search" placeholder="Search in product name..." class="form-control" />
+        </div>
+        <div class="col col-md-3 col-12 mt-2">
+            <button type="submit" class="btn btn-outline-success">Seacrh</button>
+        </div>
+    </form>
     <div class="col-3">
         @*<vc:categories-menu current-category="Apple"></vc:categories-menu>*@
         @await Component.InvokeAsync("CategoriesMenu",
@@ -14,7 +23,7 @@
     <div class="col">
         <div class="container-fluid">
             <div class="row row-cols-2">
-                @foreach (Product product in Model.Products)
+                @foreach (ProductDTO product in Model.Products)
                 {
                     await Html.RenderPartialAsync("_ProductCard", product);
                 }
