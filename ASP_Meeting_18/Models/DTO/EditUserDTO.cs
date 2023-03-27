@@ -10,7 +10,7 @@ namespace ASP_Meeting_18.Models.DTO
 
         [Required]
         [Display(Name = "Login")]
-        public string Login { get; set; } = default!;
+        public string UserName { get; set; } = default!;
         [Required]
         [Display(Name = "Date of Birth")]
         public int YearOfBirth { get; set; }

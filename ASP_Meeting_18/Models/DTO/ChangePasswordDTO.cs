@@ -10,6 +10,7 @@ namespace ASP_Meeting_18.Models.DTO
         [Required]
         [Display(Name = "New Password")]
         [DataType(DataType.Password)]
+
         public string NewPassword { get; set; } = default!;
     }
 }

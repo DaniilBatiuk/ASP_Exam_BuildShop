@@ -1,5 +1,6 @@
 ﻿using ASP_Meeting_18.Data;
 using ASP_Meeting_18.Models.DTO;
+using ASP_Meeting_18.Models.ViewModels.UserViewModel;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,16 +12,19 @@ namespace ASP_Meeting_18.Controllers
     {
         private readonly UserManager<User> userManager;
         private readonly IMapper mapper;
+        private readonly ShopDbContext _context;
+        private readonly SignInManager<User> signInManager;
 
-        public UserController(UserManager<User> userManager, IMapper mapper)
+        public UserController(UserManager<User> userManager, IMapper mapper ,ShopDbContext context, SignInManager<User> signInManager)
         {
             this.userManager = userManager;
             this.mapper = mapper;
+            this._context = context;
+            this.signInManager = signInManager;
         }
         public async Task<IActionResult> Index()
         {
             var users = userManager.Users;
-            //Use AutoMapper in Future!!!
             IEnumerable<UserDTO> usersDTO = mapper.Map<IEnumerable<UserDTO>>(await users.ToListAsync());
             return View(usersDTO);
         }
@@ -76,7 +80,7 @@ namespace ASP_Meeting_18.Controllers
             {
                 var user = await userManager.FindByIdAsync(dto.Id);
                 if (user == null) return NotFound();
-                user.UserName = dto.Login;
+                user.UserName = dto.UserName;
                 user.YearOfBirth = dto.YearOfBirth;
                 user.Email = dto.Email;
                 IdentityResult result = await userManager.UpdateAsync(user);
@@ -92,14 +96,45 @@ namespace ASP_Meeting_18.Controllers
         {
             if (id == null)
                 return NotFound();
+
             var user = await userManager.FindByIdAsync(id);
             if (user == null) return NotFound();
-            ChangePasswordDTO dto = new ChangePasswordDTO
+            ChangePasswordViewModel dto = new ChangePasswordViewModel
             {
                 Id = user.Id,
                 Email = user.Email
             };
             return View(dto);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return View(model);
+            }
+
+            var result = await userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+                return View(model);
+            }
+            await _context.SaveChangesAsync();
+            await signInManager.RefreshSignInAsync(user);
+
+            return RedirectToAction("Index");
         }
         public async Task<IActionResult> Delete(string? id)
         {

@@ -8,7 +8,7 @@
        class='@(category==Model.Item2 ? "btn btn-outline-primary" : "btn btn-outline-secondary")'>@category</a>
     </div>
 }*@
-<div class="accordion" id="accordionPanelsStayOpenExample">
+<div class="accordion card_border" style="margin-top:10px;" id="accordionPanelsStayOpenExample">
 
     @for (int i = 0; i < Model.Item1.Count; i++)
     {
@@ -23,7 +23,7 @@
                 @foreach (string innerCatedory in @Model.Item1[i].ChildCategoies!.Select(p => p.Title))
                 {
                     <div id="panelsStayOpen-collapse-@i" class="accordion-collapse collapse @(Model.Item2 != null && @Model.Item1[i].ChildCategoies!.Select(p => p.Title).Contains(Model.Item2) ? "show" : "")" aria-labelledby="panelsStayOpen-heading-@i">
-                        <div class="accordion-body select2">
+                        <div class="accordion-body">
                             <a asp-action="Index" asp-controller="@Model.Item4" asp-route-category="@innerCatedory" class="categoryLink @(Model.Item2 == innerCatedory ? "select" : "")">@innerCatedory</a>
                         </div>
                     </div>

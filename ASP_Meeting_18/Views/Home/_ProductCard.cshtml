@@ -1,6 +1,7 @@
 ﻿@using ASP_Meeting_18.Data;
 @using ASP_Meeting_18.Models.DTO;
 @model ProductDTO
+
 @*<div class="card mb-3" style="max-width: 540px;">
     <div class="row g-0">
         <div class="col-md-4">
@@ -24,20 +25,12 @@
     </div>
 </div>*@
 
-<div class="card m-2" style="width: 18rem;">
+<div class="card m-2 card_border" style="width: 18rem;">
     <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Images!.First().Image!))" alt="@Model.Title" class="card-img-top">
     <div class="card-body">
         <h5 class="card-title" style="display:block; height:50px;">@Model.Title</h5>
-        <p class="card-text">@Model.Price.ToString("0.00 EUR")</p>
-        <p class="card-text"><small class="text-muted">@Model!.Category!.Title</small></p>
-@*        <form asp-action="AddToCart" asp-controller="Cart" method="post">
-            <input type="hidden"
-                   value="@(Context.Request.Path.Value+Context.Request.QueryString.Value)"
-                   name="returnUrl" />
-            <input type="hidden" name="id" value="@Model.Id" />
-            <input type="submit" value="Add to Cart" class="btn btn-sm btn-success float-end" />
-            <a asp-controller="Admin" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-success">Details</a>
-        </form>*@
-        <a asp-controller="Product" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-success">Details</a>
+        <p class="card-text">@Model.Price.ToString("$0.00 USD")</p>
+        <a asp-controller="Product" asp-action="Details" asp-route-id="@Model.Id" class="btn button_add">Details</a>
     </div>
 </div>
+

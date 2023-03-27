@@ -43,19 +43,25 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">User</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Product" asp-action="CreateCategory">CreateCategoty</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Product" asp-action="CreateProduct">CreateProduct</a>
+                            </li>
                         }
                     </ul>
                 </div>
                 <div class="navbar-text d-sm-inline-flex justify-content-between">
                     @if (User.Identity!.IsAuthenticated)
                     {
-                        <span>
-                            Hello, @User.Identity.Name
-                            <form asp-action="Logout" asp-controller="Account">
+                        <div style="display:flex;align-items: center;">
+                            @User.Identity.Name
+                            <form asp-action="Logout" asp-controller="Account" style="margin-left: 20px;">
                                 <input type="submit" value="Logout"
                                    class="btn-sm btn-outline-secondary">
                             </form>
-                        </span>
+                        </div>
                     }
                     else
                     {
@@ -80,7 +86,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - ASP_Meeting_18 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+           Creator : Daniil Batiuk
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

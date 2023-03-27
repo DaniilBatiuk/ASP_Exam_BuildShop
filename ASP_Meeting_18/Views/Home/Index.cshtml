@@ -7,12 +7,10 @@
 }
 
 <div class="row">
-    <form asp-action="Index" method="get">
-        <div class="col col-md-3 col-12 mt-2">
-            <input type="text" asp-for="Search" placeholder="Search in product name..." class="form-control" />
-        </div>
-        <div class="col col-md-3 col-12 mt-2">
-            <button type="submit" class="btn btn-outline-success">Seacrh</button>
+    <form asp-action="Index" method="get">   
+        <div class="d-flex search_div" role="search">
+            <input type="text" asp-for="Search" placeholder="Search in product name..." class="search_input card_border" />
+            <button type="submit" class="btn button_add search_button card_border">Seacrh</button>
         </div>
     </form>
     <div class="col-3">
