@@ -8,6 +8,7 @@ using System.Security.Claims;
 
 namespace ASP_Meeting_18.Controllers
 {
+
     public class AccountController : Controller
     {
         private readonly UserManager<User> userManager;
@@ -112,7 +113,7 @@ namespace ASP_Meeting_18.Controllers
             };
             if (loginResult.Succeeded)
             {
-                return View(userInfo);
+                return RedirectToAction("Index", "Home");
             }
             User user = new User { UserName = userInfo[1], Email = userInfo[1] };
             var result = await userManager.CreateAsync(user);
@@ -122,7 +123,7 @@ namespace ASP_Meeting_18.Controllers
                 if (result.Succeeded)
                 {
                     await signInManager.SignInAsync(user, isPersistent: false);
-                    return View(userInfo);
+                    return RedirectToAction("Index", "Home");
                 }
             }
 

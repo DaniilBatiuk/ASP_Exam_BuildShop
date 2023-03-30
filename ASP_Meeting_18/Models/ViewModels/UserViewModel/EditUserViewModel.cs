@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
-namespace ASP_Meeting_18.Models.DTO
+namespace ASP_Meeting_18.Models.ViewModels.UserViewModel
 {
-    public class EditUserDTO
+    public class EditUserViewModel
     {
         [Required]
         public string Id { get; set; } = default!;

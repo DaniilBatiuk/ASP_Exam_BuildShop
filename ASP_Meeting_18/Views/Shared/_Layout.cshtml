@@ -26,6 +26,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">Card</a>
+                        </li>
                         @if (User.Identity!.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <li class="nav-item">

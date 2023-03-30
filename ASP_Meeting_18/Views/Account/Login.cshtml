@@ -2,7 +2,7 @@
 @model LoginViewModel
 <div class="wrapper">
     <div class="__container">
-        <div class="form">
+        <div class="form" style="padding-bottom:10px;">
             <form asp-action="Login" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="ReturnUrl" />
@@ -21,8 +21,8 @@
                     <label asp-for="IsPersistent" class="form-check-label"></label>
                 </div>
                 <input type="submit" value="Login" class="btn btn-primary" />
-                <a asp-action="GoogleAuth" asp-controller="Account" class="btn btn-primary">Login with Google</a>
-                <a asp-action="FbAuth" asp-controller="Account" class="btn btn-primary">Login with Facebook</a>
+                <a asp-action="GoogleAuth" asp-controller="Account" class="btn btn-primary">with Google</a>
+                <a asp-action="FbAuth" asp-controller="Account" class="btn btn-primary">with Facebook</a>
             </form>
         </div>
     </div>

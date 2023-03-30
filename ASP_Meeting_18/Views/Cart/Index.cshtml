@@ -20,15 +20,14 @@
             <tr>
                 <td>@(++num)</td>
                 <td>@item.Product.Title</td>
-                <td>@item.Product.Price.ToString("0.00 EUR")</td>
+                <td>@item.Product.Price.ToString("$0.00 USD")</td>
                 <td>@item.Count</td>
-                <td>@((item.Count * item.Product.Price).ToString("0.00 EUR"))</td>
+                <td>@((item.Count * item.Product.Price).ToString("$0.00 USD"))</td>
                 <td>
                     <form asp-action="DeleteFromCart" method="post">
                         <input type="hidden" name="id" value="@item.Product.Id">
                         <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
-                        <input type="submit" value="Delete from cart"
-                           class="btn btn-sm btn-outline-warning">
+                        <input type="submit" value="Delete from cart" class="btn btn-sm btn-outline-danger">
                     </form>
                 </td>
             </tr>
@@ -37,11 +36,11 @@
     <tfoot>
         <tr>
             <th colspan="4">Total Price:</th>
-            <th>@Model.Cart.TotalPrice.ToString("0.00 EUR")</th>
+            <th>@Model.Cart.TotalPrice.ToString("$0.00 USD")</th>
             <th></th>
         </tr>
     </tfoot>
 </table>
 <div class="text-center">
-    <a class="btn btn-primary" href="@Model.ReturnUrl">Продолить покупки</a>
+    <a class="btn btn-primary" href="@Model.ReturnUrl">Back To Product</a>
 </div>

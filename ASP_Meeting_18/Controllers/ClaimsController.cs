@@ -6,6 +6,7 @@ using System.Security.Claims;
 
 namespace ASP_Meeting_18.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ClaimsController : Controller
     {
         private readonly UserManager<User> userManager;

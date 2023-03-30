@@ -1,7 +1,8 @@
 ﻿@using System.Security.Claims;
 @model IEnumerable<Claim>
-<h2 class="badge bg-primary p-1 m-1 text-white">User Claims</h2>
-<a asp-action="Create" class="btn btn-secondary">Create new Claim</a>
+<h1>User Claims</h1>
+
+<a asp-action="Create">Create New Claim</a>
 <table class="table table-sm table-striped">
     <thead>
         <tr>
@@ -23,10 +24,11 @@
                 <td>
                     <form asp-action="Delete" method="post">
                         <input type="hidden" name="claimsInfo" value="@claim.Type;@claim.Value;@claim.ValueType">
-                        <input type="submit" value="Delete" class="btn btn-sm btn-warning">
+                        <input type="submit" value="Delete" class="btn btn-sm btn-outline-danger">
                     </form>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+

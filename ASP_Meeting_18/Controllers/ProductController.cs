@@ -4,9 +4,11 @@ using ASP_Meeting_18.Models.DTO;
 using ASP_Meeting_18.Models.ViewModels.AccountViewModels;
 using ASP_Meeting_18.Models.ViewModels.AdminViewModel;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace ASP_Meeting_18.Controllers
 {
@@ -41,7 +43,7 @@ namespace ASP_Meeting_18.Controllers
             };
             return View(vM);
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             if (_context.Products == null)
@@ -58,12 +60,15 @@ namespace ASP_Meeting_18.Controllers
             return RedirectToAction("Index", "Admin");
         }
 
+
         public async Task<JsonResult> GetChildCategories(int parentId)
         {
 
             var childCategories = await _context.Categories.Where(p => p.ParentCategoryId == parentId).Distinct().ToListAsync();
             return Json(childCategories);
         }
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Products == null)
@@ -91,6 +96,7 @@ namespace ASP_Meeting_18.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(EditProductViewModel vM)
         {
             if (!ModelState.IsValid)
@@ -140,7 +146,7 @@ namespace ASP_Meeting_18.Controllers
             return _context.Products.Any(e => e.Id == id);
         }
 
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateProduct()
         {
             CreateProductViewModel vM = new CreateProductViewModel
@@ -153,6 +159,7 @@ namespace ASP_Meeting_18.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateProduct(CreateProductViewModel vM)
         {
             if (!ModelState.IsValid || vM.Image is null)
@@ -171,7 +178,7 @@ namespace ASP_Meeting_18.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Admin");
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateCategory()
         {
             CreateCategoryViewModel vM = new CreateCategoryViewModel
@@ -183,6 +190,7 @@ namespace ASP_Meeting_18.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateCategory(CreateCategoryViewModel vM)
         {
             if (!ModelState.IsValid)

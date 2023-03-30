@@ -13,8 +13,7 @@ using System.Globalization;
 
 namespace ASP_Meeting_18.Controllers
 {
-    //[Authorize(Policy = "AdminPolicy")]
-    ////[Authorize(Roles = "manager")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly ShopDbContext _context;

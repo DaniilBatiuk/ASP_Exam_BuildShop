@@ -6,7 +6,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>User</h1>
+<h1>Users</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -49,9 +49,9 @@
                     <a asp-action="Edit" asp-route-id="@item.Id"
                    class="btn-sm btn-outline-primary">Edit</a> |
                     <a asp-action="ChangePassword" asp-route-id="@item.Id"
-                   class="btn-sm btn-outline-secondary">Change Password</a> |
+                       class="btn-sm btn-outline-warning">Change Password</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id"
-                   class="btn-sm btn-outline-warning">Delete</a>
+                       class="btn-sm btn-outline-danger">Delete</a>
                 </td>
             </tr>
         }

@@ -1,6 +1,6 @@
 ﻿@using ASP_Meeting_18.Models.ViewModels.AccountViewModels
 @model ChangeRolesViewModel
-<h1>Change Roles for User @Model.UserName</h1>
+<h1>Change Roles For User @Model.UserName</h1>
 <form asp-action="ChangeUserRoles" method="post">
     <input type="hidden" value="@Model.UserId" />
     @foreach (var role in Model.AllRoles)
@@ -15,7 +15,7 @@
             <label class="form-check-label" for="@role.Name">@role.Name</label>
         </div>
     }
-    <input type="submit" value="Save" class="btn btn-success" />
+    <input type="submit" value="Save" class="btn btn-primary" />
 </form>
 <hr />
-<a asp-action="UserList" class="btn btn-secondary mt-3">Back to user list</a>
+<a asp-action="UserList" class="btn btn-secondary mt-3">Back to user List</a>

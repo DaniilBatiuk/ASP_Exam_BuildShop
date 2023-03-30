@@ -1,9 +1,14 @@
 ﻿@model string
-<form asp-action="Create" method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="mb-3">
-        <label class="control-label" for="name">Role Name</label>
-        <input type="text" class="form-control" name="name" id="name" required />
-    </div>
-    <input type="submit" value="Create Role" class="btn btn-outline-primary" />
-</form>
+<h1>Create New Role</h1>
+<div class="col-md-4">
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="mb-3">
+            <label class="control-label" for="name">Role Name</label>
+            <input type="text" class="form-control" name="name" id="name" required />
+        </div>
+        <input type="submit" value="Create Role" class="btn btn-primary" />
+    </form>
+</div>
+<hr />
+<a asp-action="UserList" class="btn btn-secondary mt-3">Back to user List</a>

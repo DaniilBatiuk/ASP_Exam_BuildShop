@@ -1,11 +1,14 @@
 ﻿using ASP_Meeting_18.Data;
 using ASP_Meeting_18.Models.ViewModels.AccountViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace ASP_Meeting_18.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class RolesController : Controller
     {
         private readonly UserManager<User> userManager;

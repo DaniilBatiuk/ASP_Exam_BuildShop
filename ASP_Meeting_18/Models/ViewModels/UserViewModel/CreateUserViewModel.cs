@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
 
-namespace ASP_Meeting_18.Models.DTO
+namespace ASP_Meeting_18.Models.ViewModels.UserViewModel
 {
-    public class CreateUserDTO
+    public class CreateUserViewModel
     {
         [Required]
         [Display(Name = "Login")]

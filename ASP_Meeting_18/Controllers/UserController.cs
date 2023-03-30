@@ -2,12 +2,15 @@
 using ASP_Meeting_18.Models.DTO;
 using ASP_Meeting_18.Models.ViewModels.UserViewModel;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace ASP_Meeting_18.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private readonly UserManager<User> userManager;
@@ -33,7 +36,7 @@ namespace ASP_Meeting_18.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateUserDTO dto)
+        public async Task<IActionResult> Create(CreateUserViewModel dto)
         {
             if (ModelState.IsValid)
             {
@@ -68,13 +71,13 @@ namespace ASP_Meeting_18.Controllers
             //    Login = user.UserName,
             //    YearOfBirth = user.YearOfBirth
             //};
-            EditUserDTO dto = mapper.Map<EditUserDTO>(user);
+            EditUserViewModel dto = mapper.Map<EditUserViewModel>(user);
             return View(dto);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(EditUserDTO dto)
+        public async Task<IActionResult> Edit(EditUserViewModel dto)
         {
             if (ModelState.IsValid)
             {
