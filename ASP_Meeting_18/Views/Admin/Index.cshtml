@@ -12,7 +12,6 @@
         </form>
     </div>
     <div class="col-3">
-        @*<vc:categories-menu current-category="Apple"></vc:categories-menu>*@
         @await Component.InvokeAsync("CategoriesMenu",
         new {currentCategory=Model.Category,controller = "Admin"})
     </div>

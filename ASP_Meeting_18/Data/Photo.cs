@@ -4,8 +4,6 @@
     {
         public int Id { get; set; }
         public byte[]? Image { get; set; }
-        //public string Filename { get; set; } = default!;
-        //public string PhotoUrl { get; set; } = default!;
 
         public int? ProductId { get; set; }
 

@@ -6,6 +6,7 @@ namespace ASP_Meeting_18.Models.ViewModels.UserViewModel
     {
         [Required]
         [Display(Name = "Login")]
+        [MinLength(6)]
         public string Login { get; set; } = default!;
         [Required]
         [Display(Name = "Password")]

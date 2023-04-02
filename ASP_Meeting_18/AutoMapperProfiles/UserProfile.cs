@@ -8,7 +8,6 @@ namespace ASP_Meeting_18.AutoMapperProfiles
     {
         public UserProfile()
         {
-            //CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<User, UserDTO>().ForMember(dest => dest.Login, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
         }
     }

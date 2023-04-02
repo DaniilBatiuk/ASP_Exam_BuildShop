@@ -15,10 +15,8 @@ namespace ASP_Meeting_18.Controllers
         {
             this.context = context;
         }
-        //public IActionResult Index(string? returnUrl)
         public IActionResult Index(Cart cart, string? returnUrl)
         {
-            //Cart cart = GetCart();
             if (returnUrl == null)
             {
                 returnUrl = Url.Action("Index", "Home");
@@ -32,10 +30,8 @@ namespace ASP_Meeting_18.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public async Task<IActionResult> AddToCart(int id, string? returnUrl)
         public async Task<IActionResult> AddToCart(Cart cart, int id,int quantity, string? returnUrl)
         {
-            //Cart cart = GetCart();
             Product? product = await context.Products.FindAsync(id);
             if (product != null)
             {
@@ -46,10 +42,8 @@ namespace ASP_Meeting_18.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteFromCart(int id, string? returnUrl)
         public async Task<IActionResult> DeleteFromCart(Cart cart, int id, string? returnUrl)
         {
-            //Cart cart = GetCart();
             Product? product = await context.Products.FindAsync(id);
             if (product != null)
             {

@@ -34,7 +34,7 @@ namespace ASP_Meeting_18.Controllers
                 products = products.Where(t => t.Category!.Title == category);
             if (search is not null)
                 products = products.Where(t => t.Title.Contains(search));
-            int itemsPerPage = 4;
+            int itemsPerPage = 6;
             int pageCount = (int)Math.Ceiling((decimal)products.Count() / itemsPerPage);
             products = products.Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
             IEnumerable<ProductDTO> temp = mapper.Map<IEnumerable<ProductDTO>>(await products.ToListAsync());

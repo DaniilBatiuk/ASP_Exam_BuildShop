@@ -68,7 +68,6 @@ namespace ASP_Meeting_18.Controllers
             await userManager.RemoveClaimAsync(user, claimForDelete);
             return RedirectToAction("Index");
         }
-        //[Authorize(Roles = "admin,manager")]
         [Authorize(Policy = "FrameworkPolicy")]
         public IActionResult TestPolicy1()
         {

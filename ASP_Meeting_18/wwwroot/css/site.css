@@ -96,3 +96,18 @@ body {
     border: none;
     outline: none;
 }
+
+.cardImage {
+    width: 261px;
+    height: 261px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color:white;
+}
+.cardData {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 0px;
+}

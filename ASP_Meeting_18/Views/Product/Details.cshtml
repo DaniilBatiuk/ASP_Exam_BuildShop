@@ -11,15 +11,20 @@
             display: flex;
             flex-direction: row;
             align-items: flex-start;
+            justify-content: center;
         }
 
-        .img {
+        .imgDiv {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin-top: 10px;
             border-radius: 10px;
             box-shadow: 0 0 10px #444;
             max-width: 50%;
-            height: auto;
+            height: 500px;
             margin-right: 1rem;
+            background-color:white;
         }
 
         .text {
@@ -97,38 +102,27 @@
             margin: 0px 12px 20px 12px;
             text-align: center;
         }
+        .img{
+            max-width: 100%;
+            max-height: 100%;
+            padding: 20px;
+        }
     </style>
 }
 @{
     ViewData["Title"] = "Details";
 }
 
-@*<h1>Details</h1>
+
 
 <div class="task1">
-    <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Product.Images!.First().Image!))" alt="Model.Name" width="300" height="300">
-    <div class="text">
-        <p class="name">@Html.DisplayFor(model => model.Product.Title)</p>
-        <p>@Html.DisplayNameFor(model => model.Product.Category!.ParentCategory!.Title) : <span>@Html.DisplayFor(model => model.Product.Category!.ParentCategory!.Title)</span></p>
-        <p>@Html.DisplayNameFor(model => model.Product.Category!.Title) : <span>@Html.DisplayFor(model => model.Product.Category!.Title)</span></p>
-        <p>@Html.DisplayNameFor(model => model.Product.Count) : <span>@Html.DisplayFor(model => model.Product.Count)</span></p>
-        <p>@Html.DisplayNameFor(model => model.Product.Price) : <span>@Html.DisplayFor(model => model.Product.Price) EUR</span></p>
-        <form asp-action="AddToCart" asp-controller="Cart" method="post">
-            <input type="hidden" value="@(Context.Request.Path.Value+Context.Request.QueryString.Value)" name="returnUrl" />
-            <input type="hidden" name="id" value="@Model.Product.Id" />
-            <input type="submit" value="Add to Cart" class="btn btn-sm btn-success" />
-        </form>
+    <div class="imgDiv">
+        <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Product.Images!.First().Image!))" alt="Model.Name" class="img">
     </div>
-    <p class="description">@Html.DisplayNameFor(model => model.Product.Description) : <span>@Html.DisplayFor(model => model.Product.Description)</span></p>
-</div>*@
-
-
-<div class="task1">
-    <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Product.Images!.First().Image!))" alt="Model.Name" class="img">
     <div class="text">
         <p class="category">@Html.DisplayFor(model => model.Product.Category!.Title)</p>
         <div class="title margin_buttom">@Html.DisplayFor(model => model.Product.Title)</div>
-        <p class="money margin_buttom">$@Html.DisplayFor(model => model.Product.Price)USD</p>
+        <p class="money margin_buttom">$@Html.DisplayFor(model => model.Product.Price) USD</p>
         <p class="quantity">Quantity</p>
         <div class="quantity_counter margin_buttom">
             <button class="quantity_counter__button" id="decrement">-</button>

@@ -10,6 +10,7 @@ namespace ASP_Meeting_18.Models.ViewModels.UserViewModel
 
         [Required]
         [Display(Name = "Login")]
+        [MinLength(6)]
         public string UserName { get; set; } = default!;
         [Required]
         [Display(Name = "Date of Birth")]

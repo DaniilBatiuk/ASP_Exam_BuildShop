@@ -17,7 +17,6 @@ namespace ASP_Meeting_18.ViewComponents
         {
             List<Category> categoryNames = await context.Categories.Where(p => p.ParentCategoryId == null).Distinct().ToListAsync();
             List<Category> ww = await context.Categories.Where(p => p.ChildCategoies != null).Distinct().ToListAsync();
-            //List<string> innerCategory2 = await context.Products.Include(t => t.Category).Select(t => t.Category!.Title).Distinct().ToListAsync();
             List<string> innerCategory = await context.Categories.Where(p => p.ParentCategoryId != null).Select(t => t.Title).Distinct().ToListAsync();       
             return View(new Tuple<List<Category>, string?, List<string>,string>(categoryNames, currentCategory, innerCategory,controller));
         }

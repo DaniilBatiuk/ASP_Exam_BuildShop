@@ -151,7 +151,6 @@ namespace ASP_Meeting_18.Controllers
         {
             CreateProductViewModel vM = new CreateProductViewModel
             {
-                //CategorySL = new SelectList(await _context.Categories.Where(p => p.ParentCategoryId != null).Distinct().ToListAsync(), "Id", "Title"),
                 ParentCategorySL = new SelectList(await _context.Categories.Where(p => p.ParentCategoryId == null).Distinct().ToListAsync(), "Id", "Title")
             };
             return View(vM);
@@ -173,7 +172,6 @@ namespace ASP_Meeting_18.Controllers
                 vM.Product.Images!.Add(new Photo { Image = br.ReadBytes((int)vM.Image.Length) });
             }
             Product createdProduct = mapper.Map<Product>(vM.Product);
-            //createdProduct.Category.ParentCategoryId = vM.ParentCategoryId;
             _context.Add(createdProduct);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Admin");

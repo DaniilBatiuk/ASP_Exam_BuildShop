@@ -2,12 +2,13 @@
 @using ASP_Meeting_18.Models.DTO;
 @model ProductDTO
 
-<div class="card m-2 card_border" style="width: 18rem;">
-    <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Images!.First().Image!))" alt="@Model.Title">
-    <div class="card-body">
-        <h5 class="card-title" style="display:block; height:50px;">@Model.Title</h5>
-        <p class="card-text">@Model.Price.ToString("$0.00 USD")</p>
-        
+<div class="card m-2 card_border" style="width: 18rem;min-height: 436px;">
+    <div class="cardImage">
+        <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Images!.First().Image!))" alt="@Model.Title" class="card-img-top">
+    </div>
+    <div class="card-body cardData">
+        <h5 class="card-title" style="display:block;">@Model.Title</h5>
+        <p class="card-text">@Model.Price.ToString("$0.00 USD")</p>       
         <div class="btn-group" role="group" aria-label="Basic mixed styles example" style="display: flex; align-items:center; margin-bottom:10px;">
             <a asp-controller="Product" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-success">Details</a>
             <a asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>

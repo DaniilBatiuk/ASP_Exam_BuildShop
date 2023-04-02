@@ -63,14 +63,6 @@ namespace ASP_Meeting_18.Controllers
                 return NotFound();
             var user = await userManager.FindByIdAsync(id);
             if (user == null) return NotFound();
-            ////AutoMapper!!!
-            //EditUserDTO dto = new EditUserDTO
-            //{
-            //    Id = user.Id,
-            //    Email = user.Email,
-            //    Login = user.UserName,
-            //    YearOfBirth = user.YearOfBirth
-            //};
             EditUserViewModel dto = mapper.Map<EditUserViewModel>(user);
             return View(dto);
         }
