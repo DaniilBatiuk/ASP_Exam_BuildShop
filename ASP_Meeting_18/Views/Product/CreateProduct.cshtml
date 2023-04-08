@@ -67,24 +67,28 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
+        function change(){
+            var parentId = $('#ParentCategoryId').val();
+            $.ajax({
+                type: 'GET',
+                url: '/Product/GetChildCategories',
+                data: { parentId: parentId },
+                success: function (response) {
+                    var childCategories = $('#child-categories');
+                    childCategories.empty();
+                    $.each(response, function (index, category) {
+                        childCategories.append($('<option/>', {
+                            value: category.id,
+                            text: category.title
+                        }));
+                    });
+                }
+            });
+        }
         $(document).ready(function () {
+            change();
             $('#ParentCategoryId').change(function () {
-                var parentId = $(this).val();
-                $.ajax({
-                    type: 'GET',
-                    url: '/Product/GetChildCategories',
-                    data: { parentId: parentId },
-                    success: function (response) {
-                        var childCategories = $('#child-categories');
-                        childCategories.empty();
-                        $.each(response, function (index, category) {
-                            childCategories.append($('<option/>', {
-                                value: category.id,
-                                text: category.title
-                            }));
-                        });
-                    }
-                });
+                change();
             });
         });
     </script>

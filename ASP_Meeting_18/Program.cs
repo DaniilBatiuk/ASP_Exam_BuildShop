@@ -9,6 +9,10 @@ using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using System.Globalization;
+using Microsoft.Extensions.Hosting;
+using Topshelf.Runtime;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAutoMapper(typeof(CategoryProfile), typeof(ShopProfile), typeof(UserProfile), typeof(EditUserProfile));
@@ -21,13 +25,14 @@ builder.Services.AddIdentity<User, IdentityRole>()
 string connStr = builder.Configuration.GetConnectionString("shopDb");
 builder.Services.AddDbContext<ShopDbContext>(options =>
 options.UseSqlServer(connStr));
-
+builder.Services.AddScoped<RoleManager<IdentityRole>>();
+builder.Services.AddScoped<UserManager<User>>();
 builder.Services.AddControllersWithViews()
         .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
         .AddDataAnnotationsLocalization();
 
-    // Set the culture to use the period as the decimal separator
-    var cultureInfo = new CultureInfo("en-US");
+// Set the culture to use the period as the decimal separator
+var cultureInfo = new CultureInfo("en-US");
     cultureInfo.NumberFormat.NumberDecimalSeparator = ".";
     CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
     CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
@@ -59,7 +64,51 @@ builder.Services.AddAuthentication().AddGoogle(options =>
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var serviceProvider = scope.ServiceProvider;
+    await SeedData.Initialize(serviceProvider,app.Environment);
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<ShopDbContext>();
+        await context.Database.EnsureCreatedAsync();
+        await EnsureRolesAsync(services, "User");
+        await EnsureRolesAsync(services, "Admin");
+        await EnsureDefaultUserAsync(services);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while seeding the database.");
+    }
+}
 
+async Task EnsureRolesAsync(IServiceProvider services, string roleName)
+{
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    if (!await roleManager.RoleExistsAsync(roleName))
+    {
+        await roleManager.CreateAsync(new IdentityRole(roleName));
+    }
+}
+
+async Task EnsureDefaultUserAsync(IServiceProvider services)
+{
+    var userManager = services.GetRequiredService<UserManager<User>>();
+    var user = await userManager.FindByNameAsync("admin@example.com");
+    if (user == null)
+    {
+        user = new User
+        {
+            UserName = "AdminDaniil",
+            Email = "admin@example.com",
+            YearOfBirth = 2003
+        };
+        await userManager.CreateAsync(user, "IAmAdminNumber1!");
+        await userManager.AddToRoleAsync(user, "Admin");
+    }
+}
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

@@ -59,13 +59,13 @@ namespace ASP_Meeting_18.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await signInManager.PasswordSignInAsync(vm.Login,
-                    vm.Password, vm.IsPersistent, false);
-                if(result.Succeeded)
+                var result = await signInManager.PasswordSignInAsync(vm.Login,vm.Password, vm.IsPersistent, true);
+                var user = await userManager.FindByNameAsync(vm.Login);
+                if (result.Succeeded && user.UserName==vm.Login)
                 {
                     if (!string.IsNullOrEmpty(vm.ReturnUrl) && Url.IsLocalUrl(vm.ReturnUrl))
                     {
-                        return Redirect(vm.ReturnUrl);
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                         return RedirectToAction("Index", "Home");

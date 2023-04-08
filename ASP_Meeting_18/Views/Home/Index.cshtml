@@ -8,18 +8,18 @@
 
 <div class="row">
     <form asp-action="Index" method="get">   
-        <div class="d-flex search_div" role="search">
+        <div class="d-flex search_div searchPhone" role="search">
             <input type="text" asp-for="Search" placeholder="Search in product name..." class="search_input card_border" />
             <button type="submit" class="btn button_add search_button card_border">Seacrh</button>
         </div>
     </form>
-    <div class="col-3">
+    <div class="col-3 listPhone">
         @await Component.InvokeAsync("CategoriesMenu",
         new {currentCategory=Model.Category,controller = "Home"})
     </div>
     <div class="col">
         <div class="container-fluid">
-            <div class="row row-cols-2">
+            <div class="row row-cols-2 productPhone">
                 @foreach (ProductDTO product in Model.Products)
                 {
                     await Html.RenderPartialAsync("_ProductCard", product);
