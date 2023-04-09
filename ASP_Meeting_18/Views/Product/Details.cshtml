@@ -1,5 +1,6 @@
 ﻿@model ASP_Meeting_18.Models.ViewModels.AdminViewModel.DetailsProductViewModel
 @section Styles{
+
     <style>
         * {
             box-sizing: border-box;
@@ -9,11 +10,8 @@
 
         .task1 {
             display: flex;
-            flex-direction: row;
-            align-items: flex-start;
             justify-content: center;
         }
-
         .imgDiv {
             display: flex;
             align-items: center;
@@ -25,6 +23,8 @@
             height: 500px;
             margin-right: 1rem;
             background-color:white;
+            min-width: 300px;
+            overflow: hidden;
         }
 
         .text {
@@ -32,6 +32,7 @@
             max-width: 30%;
             margin: 0;
             margin-top: 10px;
+            min-width:300px;
         }
 
         .margin_buttom {
@@ -104,8 +105,9 @@
         }
         .img{
             max-width: 100%;
-            max-height: 100%;
+            max-height: 100%;           
             padding: 20px;
+
         }
     </style>
 }
